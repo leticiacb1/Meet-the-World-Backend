@@ -3,11 +3,11 @@ from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import Http404
-from .models import Music,News
-from .serializers import MusicSerializer, NewsSerializer
+from .models import Music,News, User
+from .serializers import MusicSerializer, NewsSerializer, UserSerializer
 
 def index(request):
-    return HttpResponse("Olá mundo! Este é o app notes de Tecnologias Web do Insper.")
+    return HttpResponse("Olá, mundo! Este é o projeto Random World do grupo LLL de Tecnologias Web do Insper.")
 
 @api_view(['GET', 'POST', 'DELETE'])
 def api_news(request, news_id):
@@ -37,6 +37,43 @@ def api_music(request, music_id):
     serialized_music = MusicSerializer(music)
     return Response(serialized_music.data)
 
+@api_view(['GET', 'POST', 'DELETE'])
+def api_user(request, email):
+    try:
+        user = User.objects.get(email = email)
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)
+    except User.DoesNotExist:
+        if request.method == "DELETE":
+            user.delete()
+            return Response(status=204)
+        raise Http404()
+    
+    
+
+    # serialized_user = UserSerializer(user)
+    # return Response(serialized_user.data)
+
+@api_view(['GET', 'POST'])
+def api_all_users(request):
+    
+    if request.method == "POST":
+            newFirstName = request.data['firstName']
+            newLastName = request.data['lastName']
+            newRegion = request.data['region']
+            newPassword = request.data['password']
+            newEmail = request.data['email']
+            newUser = User(firstName = newFirstName, lastName = newLastName, region = newRegion, password= newPassword, email= newEmail)
+            newUser.save()
+
+    try:
+        all_users = User.objects.all()
+    except:
+        return Response(status=200)
+        
+    serialized_users = UserSerializer(all_users, many=True)
+    return Response(serialized_users.data)
+
 @api_view(['GET', 'POST'])
 def api_news_get(request):
 
@@ -45,9 +82,10 @@ def api_news_get(request):
         title = new_news_data['title']
         content = new_news_data['content']
         data = new_news_data['data']
-        link = new_news_data['link']   
+        link = new_news_data['link']
+        userEmail = new_news_data['userEmail']
 
-        new_news = News(title=title, content=content, data=data, link=link)
+        new_news = News(title=title, content=content, data=data, link=link, userEmail = userEmail)
         new_news.save()
 
     all_news = News.objects.all()
@@ -62,8 +100,9 @@ def api_music_get(request):
         titulo = new_music_data['titulo']
         artista = new_music_data['artista']
         img = new_music_data['img']
+        userEmail = new_music_data['userEmail']
 
-        new_music = Music(titulo=titulo, artista=artista, img=img)
+        new_music = Music(titulo=titulo, artista=artista, img=img, userEmail=userEmail)
         new_music.save()
 
     all_music = Music.objects.all()
