@@ -1,0 +1,76 @@
+[
+    {
+        "model": "interests.music",
+        "pk":1,
+        "fields":{
+          "titulo": "Sorry, Heart",
+          "artista": "nct dream",
+          "img":"links",
+          "user":1
+        }
+    },
+    {
+        "model": "interests.music",
+        "pk":2,
+        "fields":{
+            "titulo": "To my first",
+            "artista": "nct dream",
+            "img":"links",
+            "user":1
+          }
+    },
+    {
+        "model": "interests.news",
+        "pk":3,
+        "fields":{
+          "title": "Sorvete com cristais de leite",
+          "content": "Sirva o seu sorvete favorito em uma vasilha e jogue leite em cima.",
+          "data":"12/34/5601",
+          "link":"links",
+          "user":1
+        }
+    },
+    {
+        "model": "interests.news",
+        "pk":4,
+        "fields":{
+            "title": "lalalalala",
+            "content": "iuiuiuiuiuiui",
+            "data":"12/34/5601",
+            "link":"links",
+            "user":1
+        }
+    },
+    {
+        "model": "interests.news",
+        "pk":5,
+        "fields":{
+            "title": "uuuuuuuuuuuu",
+            "content": "oioioio",
+            "data":"91/12/9837",
+            "link":"links",
+            "user":2
+        }
+    },
+    {
+        "model": "interests.news",
+        "pk":6,
+        "fields":{
+            "title": "oqoqoqoqoq",
+            "content": "qqqqq",
+            "data":"22/99/5121",
+            "link":"links",
+            "user":1
+        }
+    },
+    {
+        "model": "interests.music",
+        "pk":7,
+        "fields":{
+            "titulo": "Chewing Gum",
+            "artista": "nct dream",
+            "img":"links",
+            "user":2
+          }
+    }
+]
