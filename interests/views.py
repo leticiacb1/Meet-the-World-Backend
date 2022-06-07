@@ -106,11 +106,12 @@ def api_get_user(request):
         username = request.data['username']
         password = request.data['password']
         email = request.data['email']
-        if User.objects.filter(email=email).exists == False:
+        if User.objects.filter(email=email).exists() == False and User.objects.filter(username=username).exists() == False:
             user = User.objects.create_user(username, email, password)  
             user.is_staff=True
             user.save()
-
+        else:
+            return HttpResponseForbidden()
     all_users = User.objects.all()
     serialized_user = UserSerializer(all_users, many=True)
     return Response(serialized_user.data)
