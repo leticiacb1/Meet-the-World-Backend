@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import Http404, HttpResponseForbidden, JsonResponse
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
+from .models import UserPersonalizado as User
 
 
 def index(request):
@@ -88,26 +88,34 @@ def api_get_token(request):
         if request.method == 'POST':
             username = request.data['username']
             password = request.data['password']
-            user = authenticate(username=username, password=password)
+            #print(f"Username: {username} Password: {password}")
+            #user = User.objects.get(username=username)
+            #print(user, user.username, user.password)
+            user = authenticate(username=username, password='12345')
+            print(user)
 
             if user is not None:
                 token, created = Token.objects.get_or_create(user=user)
                 return JsonResponse({"token":token.key})
             else:
+                print("ENtrou aqui")
                 return HttpResponseForbidden()
     except:
         return HttpResponseForbidden()
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
-def api_get_user(request):
+def api_get_users(request):
 
     if request.method == 'POST':
         username = request.data['username']
         password = request.data['password']
         email = request.data['email']
+        first_name = request.data['first_name']
+        last_name = request.data['last_name']
+        #region = request.data['region']
         if User.objects.filter(email=email).exists() == False and User.objects.filter(username=username).exists() == False:
-            user = User.objects.create_user(username, email, password)  
+            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
             user.is_staff=True
             user.save()
         else:
@@ -116,4 +124,13 @@ def api_get_user(request):
     serialized_user = UserSerializer(all_users, many=True)
     return Response(serialized_user.data)
 
-
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def api_get_user(request, username):
+    if request.method == 'GET' and username != None:
+        print(f"Username: {username}")
+        user = User.objects.get(username=username)
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)
+    else: 
+        raise Http404()

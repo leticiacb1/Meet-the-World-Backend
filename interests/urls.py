@@ -9,5 +9,7 @@ urlpatterns = [
     path('api/newss/', views.api_news_get),
     path('api/musics/', views.api_music_get),
     path('api/token/', views.api_get_token),
-    path('api/users/', views.api_get_user),
+    path('api/users/<username>/', views.api_get_user),
+    path('api/users/', views.api_get_users),
+    
 ]

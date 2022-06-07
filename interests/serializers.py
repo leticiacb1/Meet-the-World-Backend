@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import News, Music
-from django.contrib.auth.models import User
+from .models import News, Music, UserPersonalizado
+# from django.contrib.auth.models import User
 
 
 class NewsSerializer(serializers.ModelSerializer):
@@ -15,5 +15,5 @@ class MusicSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['username', 'password']
+        model = UserPersonalizado
+        fields = ['username', 'password', 'email', 'first_name', 'last_name', 'region']
