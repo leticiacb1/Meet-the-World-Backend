@@ -6,7 +6,7 @@ from .models import News, Music, UserPersonalizado
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
-        fields = ['title', 'content', 'data', 'link', 'user']
+        fields = ['title', 'content', 'img', 'link', 'user']
 
 class MusicSerializer(serializers.ModelSerializer):
     class Meta:

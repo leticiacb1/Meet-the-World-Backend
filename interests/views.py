@@ -53,11 +53,11 @@ def api_news_get(request):
         new_news_data = request.data
         title = new_news_data['title']
         content = new_news_data['content']
-        data = new_news_data['data']
+        img = new_news_data['img']
         link = new_news_data['link']   
         user = request.user
 
-        new_news = News(title=title, content=content, data=data, link=link, user=user)
+        new_news = News(title=title, content=content, img=img, link=link, user=user)
         new_news.save()
 
     all_news = News.objects.filter(user=request.user)
