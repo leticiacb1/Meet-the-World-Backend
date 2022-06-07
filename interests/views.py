@@ -67,6 +67,7 @@ def api_news_get(request):
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def api_music_get(request):
+    print("Entrou")
 
     if request.method == 'POST':
         new_music_data = request.data
@@ -74,9 +75,10 @@ def api_music_get(request):
         artista = new_music_data['artista']
         img = new_music_data['img']
         user = request.user
-        
-        new_music = Music(titulo=titulo, artista=artista, img=img, user=user)
-        new_music.save()
+        print(user.id)
+        if Music.objects.filter(titulo=titulo, user=user).exists() == False:
+            new_music = Music(titulo=titulo, artista=artista, img=img, user=user)
+            new_music.save()
 
     all_music = Music.objects.filter(user=request.user)
     serialized_music = MusicSerializer(all_music, many=True)
@@ -88,14 +90,12 @@ def api_get_token(request):
         if request.method == 'POST':
             username = request.data['username']
             password = request.data['password']
-            #print(f"Username: {username} Password: {password}")
-            #user = User.objects.get(username=username)
-            #print(user, user.username, user.password)
-            user = authenticate(username=username, password='12345')
-            print(user)
+            user = authenticate(username=username, password=password)
+            print(request.user)
 
             if user is not None:
                 token, created = Token.objects.get_or_create(user=user)
+                print("token: "+token.key)
                 return JsonResponse({"token":token.key})
             else:
                 print("ENtrou aqui")
@@ -113,9 +113,9 @@ def api_get_users(request):
         email = request.data['email']
         first_name = request.data['first_name']
         last_name = request.data['last_name']
-        #region = request.data['region']
+        region = request.data['region']
         if User.objects.filter(email=email).exists() == False and User.objects.filter(username=username).exists() == False:
-            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, region=region)
             user.is_staff=True
             user.save()
         else:
