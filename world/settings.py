@@ -93,23 +93,23 @@ WSGI_APPLICATION = 'world.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'world',
-#         'USER': 'worlduser',
-#         'PASSWORD': 'worldsenha',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://localhost/world?user=worlduser&password=worldsenha',
-        conn_max_age=600,
-        ssl_require=not DEBUG
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'world',
+        'USER': 'worlduser',
+        'PASSWORD': 'worldsenha',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgresql://localhost/world?user=worlduser&password=worldsenha',
+#         conn_max_age=600,
+#         ssl_require=not DEBUG
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
