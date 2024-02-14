@@ -69,6 +69,8 @@ python manage.py runserver
 
 **Acessando projeto via web (Aplicação Heroku)**
 
+( Desatualizado - Necessitando migração )
+
 1. Apenas clique <a href = "https://serene-bastion-41676.herokuapp.com/">aqui</a>.
 
 @2022, Insper. Quarto Semestre, Engenharia da Computação.
